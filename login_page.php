@@ -1,3 +1,31 @@
+<?php
+$f = "visit.php";
+if(!file_exists($f)){
+  touch($f);
+  $handle =  fopen($f, "w" ) ;
+  fwrite($handle,0) ;
+  fclose ($handle);
+}
+ 
+include('libs/phpqrcode/qrlib.php'); 
+
+function getUsernameFromEmail($email) {
+  $find = '@';
+  $pos = strpos($email, $find);
+  $username = substr($email, 0, $pos);
+  return $username;
+}
+
+if(isset($_POST['submit']) ) {
+  $tempDir = 'temp/'; 
+  $email = $_POST['mail'];
+  $subject =  $_POST['subject'];
+  $filename = getUsernameFromEmail($email);
+  $body =  $_POST['msg'];
+  $codeContents = 'mailto:'.$email.'?subject='.urlencode($subject).'&body='.urlencode($body); 
+  QRcode::png($codeContents, $tempDir.''.$filename.'.png', QR_ECLEVEL_L, 5);
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -65,13 +93,8 @@
           <a class="btn btn-primary submitBtn" style="width:210px; margin:5px 0;" href="download.php?file=<?php echo $filename; ?>.png ">Download QR Code</a>
         </center>
       </div>
-      <div class = "dllink" style="text-align:center;margin:-100px 0px 50px 0px;">
-        <h4>Developer: Tarique Akhtar Ansari</h4>
-      </div>
-    </div>
     </div>
   </div>
 </div>
-
 </body>
 </html>
