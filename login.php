@@ -20,10 +20,10 @@ if(isset($_POST['submit']) ) {
 	$phone =  $_POST['phone'];
 	$codeContents = 'Name:'.$user_name."\n"; 
 	$codeContents .= 'Email:'.$email."\n"; 
-	foreach($_POST['vehicle'] as $vehicle){
-		$codeContents .= 'vehicle:'.$vehicle."\n";
+	foreach($_POST['event'] as $event){
+		$codeContents .= 'Event:'.$event."\n";
 	}
-	$codeContents .= 'phone:'.$phone."\n"; 
+	$codeContents .= 'Phone:'.$phone."\n"; 
 	$conn = new mysqli('localhost', 'root', '', 'fest');
 	$events = "SELECT * FROM events ";
 	$results = $conn->query($events);
