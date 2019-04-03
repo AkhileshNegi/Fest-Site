@@ -72,6 +72,7 @@ if(isset($_POST['submit']) ) {
 				<input type="checkbox" name="vehicle1" value="Bike"> I have a bike<br>
 				<input type="checkbox" name="vehicle2" value="Car"> I have a car<br>
 				<input type="checkbox" name="vehicle3" value="Boat" > I have a boat<br><br>	
+				<button type="button" class="btn " id="hide_events">Hide</button>
 			</div>
             <div class="form-group">
               <input type="submit" name="submit" class="btn btn-primary submitBtn" style="width:20em; margin:0;" />
