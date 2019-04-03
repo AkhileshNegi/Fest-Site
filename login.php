@@ -1,28 +1,34 @@
 <?php
 include('libs/phpqrcode/qrlib.php'); 
+$conn = new mysqli('localhost', 'root', '', 'fest');
+$sql="SELECT * FROM events";
+$result = $conn->query($sql);
+if ($conn->connect_error) {
+	die("Connection failed: " . $conn->connect_error);
+}
 function getUsernameFromEmail($email) {
-  $find = '@';
-  $pos = strpos($email, $find);
-  $username = substr($email, 0, $pos);
-  return $username;
+	$find = '@';
+	$pos = strpos($email, $find);
+	$username = substr($email, 0, $pos);
+	return $username;
 }
 if(isset($_POST['submit']) ) {
-  $tempDir = 'temp/'; 
-  $email = $_POST['mail'];
-  $user_name =  $_POST['user_name'];
-  $filename = getUsernameFromEmail($email);
-  $phone =  $_POST['phone'];
+	$tempDir = 'temp/'; 
+	$email = $_POST['mail'];
+	$user_name =  $_POST['user_name'];
+	$filename = getUsernameFromEmail($email);
+	$phone =  $_POST['phone'];
 	$codeContents = 'Name:'.$user_name."\n"; 
 	$codeContents .= 'Email:'.$email."\n"; 
-  foreach($_POST['vehicle'] as $vehicle){
-        	$codeContents .= 'vehicle:'.$vehicle."\n";
-    }
+	foreach($_POST['vehicle'] as $vehicle){
+		$codeContents .= 'vehicle:'.$vehicle."\n";
+	}
 	$codeContents .= 'phone:'.$phone."\n"; 
 	$conn = new mysqli('localhost', 'root', '', 'fest');
 	$events = "SELECT * FROM events ";
 	$results = $conn->query($events);
-  // $codeContents = 'mailto:'.$email.'?user_name='.urlencode($user_name).'&phone='.urlencode($phone); 
-  QRcode::png($codeContents, $tempDir.''.$filename.'.png', QR_ECLEVEL_L, 5);
+	// $codeContents = 'mailto:'.$email.'?user_name='.urlencode($user_name).'&phone='.urlencode($phone); 
+	QRcode::png($codeContents, $tempDir.''.$filename.'.png', QR_ECLEVEL_L, 5);
 }
 ?>
 <!DOCTYPE html>
@@ -48,7 +54,6 @@ if(isset($_POST['submit']) ) {
     </li>
   </ul>
 </nav>
-
 <div class="container-fluid">
   <h2>More Equal Columns</h2>
   <div class="row">
@@ -72,10 +77,13 @@ if(isset($_POST['submit']) ) {
             </div>
 			<button type="button" class="btn " id="show_events">Select Events</button>
 			<div class="form-group "style="display:none;" id="events">
-				<input type="checkbox" name="vehicle[]" value="Bike"> I have a bike<br>
-				<input type="checkbox" name="vehicle[]" value="Car"> I have a car<br>
-				<input type="checkbox" name="vehicle[]" value="Boat" > I have a boat<br><br>	
-				<button type="button" class="btn " id="hide_events">Hide</button>
+			<?php
+			if ($result->num_rows > 0) {
+				while($ads = $result->fetch_assoc()) { ?>
+				<input type="checkbox" name="event[]" value="<?php echo $ads['event_name'];?>"> <?php echo $ads['event_name'];?><br><?php
+				}
+			}?>	
+			<button type="button" class="btn " id="hide_events">Hide</button>
 			</div>
             <div class="form-group">
               <input type="submit" name="submit" class="btn btn-primary submitBtn" style="width:20em; margin:0;" />
