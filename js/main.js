@@ -1,3 +1,5 @@
 $(document).ready(function(){
-  	alert("hello");
+	$( "#show_events" ).click(function() {
+	  $( "#events" ).show();
+	});
 });
