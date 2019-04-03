@@ -18,9 +18,6 @@ if(isset($_POST['submit']) ) {
 	$conn = new mysqli('localhost', 'root', '', 'fest');
 	$events = "SELECT * FROM events ";
 	$results = $conn->query($events);
-while($result = $results->fetch_assoc()) {
-	var_dump($result['event_name']);
-}
   // $codeContents = 'mailto:'.$email.'?user_name='.urlencode($user_name).'&phone='.urlencode($phone); 
   QRcode::png($codeContents, $tempDir.''.$filename.'.png', QR_ECLEVEL_L, 5);
 }
@@ -70,8 +67,8 @@ while($result = $results->fetch_assoc()) {
             <label>Phone Number</label>
             <input type="number" class="form-control" name="phone" style="width:20em;" value="<?php echo @$phone; ?>" required placeholder="Enter your message"></textarea>
             </div>
-			<button type="button" class="btn btn-outline-info" onclick="events();">Select Events</button>
-			<div class="form-group">
+			<button type="button" class="btn " id="show_events">Select Events</button>
+			<div class="form-group "style="display:none;" id="events">
 				<input type="checkbox" name="vehicle1" value="Bike"> I have a bike<br>
 				<input type="checkbox" name="vehicle2" value="Car"> I have a car<br>
 				<input type="checkbox" name="vehicle3" value="Boat" > I have a boat<br><br>	
@@ -101,5 +98,7 @@ while($result = $results->fetch_assoc()) {
     </div>
   </div>
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="js/main.js"></script>
 </body>
 </html>
