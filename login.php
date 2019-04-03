@@ -1,24 +1,34 @@
 <?php
 include('libs/phpqrcode/qrlib.php'); 
+$conn = new mysqli('localhost', 'root', '', 'fest');
+$sql="SELECT * FROM events";
+$result = $conn->query($sql);
+if ($conn->connect_error) {
+	die("Connection failed: " . $conn->connect_error);
+}
 function getUsernameFromEmail($email) {
-  $find = '@';
-  $pos = strpos($email, $find);
-  $username = substr($email, 0, $pos);
-  return $username;
+	$find = '@';
+	$pos = strpos($email, $find);
+	$username = substr($email, 0, $pos);
+	return $username;
 }
 if(isset($_POST['submit']) ) {
-  $tempDir = 'temp/'; 
-  $email = $_POST['mail'];
-  $subject =  $_POST['subject'];
-  $filename = getUsernameFromEmail($email);
-  $body =  $_POST['msg'];
-  $rating = "5star";
-$codeContents = 'Email:'.$email."\n"; 
-$codeContents .= 'Subject:'.$subject."\n"; 
-$codeContents .= 'Body:'.$body."\n"; 
-$codeContents .= 'Star:'.$rating."\n"; 
-  // $codeContents = 'mailto:'.$email.'?subject='.urlencode($subject).'&body='.urlencode($body); 
-  QRcode::png($codeContents, $tempDir.''.$filename.'.png', QR_ECLEVEL_L, 5);
+	$tempDir = 'temp/'; 
+	$email = $_POST['mail'];
+	$user_name =  $_POST['user_name'];
+	$filename = getUsernameFromEmail($email);
+	$phone =  $_POST['phone'];
+	$codeContents = 'Name:'.$user_name."\n"; 
+	$codeContents .= 'Email:'.$email."\n"; 
+	foreach($_POST['event'] as $event){
+		$codeContents .= 'Event:'.$event."\n";
+	}
+	$codeContents .= 'Phone:'.$phone."\n"; 
+	$conn = new mysqli('localhost', 'root', '', 'fest');
+	$events = "SELECT * FROM events ";
+	$results = $conn->query($events);
+	// $codeContents = 'mailto:'.$email.'?user_name='.urlencode($user_name).'&phone='.urlencode($phone); 
+	QRcode::png($codeContents, $tempDir.''.$filename.'.png', QR_ECLEVEL_L, 5);
 }
 ?>
 <!DOCTYPE html>
@@ -44,7 +54,6 @@ $codeContents .= 'Star:'.$rating."\n";
     </li>
   </ul>
 </nav>
-
 <div class="container-fluid">
   <h2>More Equal Columns</h2>
   <div class="row">
@@ -55,17 +64,27 @@ $codeContents .= 'Star:'.$rating."\n";
           <h3>Please Fill-out All Fields</h3>
           <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" >
             <div class="form-group">
+              <label>Name</label>
+              <input type="text" class="form-control" name="user_name" style="width:20em;" placeholder="Your Name" value="<?php echo @$user_name; ?>" required/>
+             </div>
+            <div class="form-group">
               <label>Email</label>
               <input type="email" class="form-control" name="mail" style="width:20em;" placeholder="Enter your Email" value="<?php echo @$email; ?>" required />
             </div>
             <div class="form-group">
-              <label>Subject</label>
-              <input type="text" class="form-control" name="subject" style="width:20em;" placeholder="Enter your Email Subject" value="<?php echo @$subject; ?>" required pattern="[a-zA-Z .]+" />
-             </div>
-            <div class="form-group">
-            <label>Message</label>
-            <input type="text" class="form-control" name="msg" style="width:20em;" value="<?php echo @$body; ?>" required pattern="[a-zA-Z0-9 .]+" placeholder="Enter your message"></textarea>
+            <label>Phone Number</label>
+            <input type="number" class="form-control" name="phone" style="width:20em;" value="<?php echo @$phone; ?>" required placeholder="Enter your message"></textarea>
             </div>
+			<button type="button" class="btn " id="show_events">Select Events</button>
+			<div class="form-group "style="display:none;" id="events">
+			<?php
+			if ($result->num_rows > 0) {
+				while($ads = $result->fetch_assoc()) { ?>
+				<input type="checkbox" name="event[]" value="<?php echo $ads['event_name'];?>"> <?php echo $ads['event_name'];?><br><?php
+				}
+			}?>	
+			<button type="button" class="btn " id="hide_events">Hide</button>
+			</div>
             <div class="form-group">
               <input type="submit" name="submit" class="btn btn-primary submitBtn" style="width:20em; margin:0;" />
             </div>
@@ -91,5 +110,7 @@ $codeContents .= 'Star:'.$rating."\n";
     </div>
   </div>
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="js/main.js"></script>
 </body>
 </html>
