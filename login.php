@@ -14,6 +14,9 @@ if(isset($_POST['submit']) ) {
   $phone =  $_POST['phone'];
 	$codeContents = 'Name:'.$user_name."\n"; 
 	$codeContents .= 'Email:'.$email."\n"; 
+  foreach($_POST['vehicle'] as $vehicle){
+        	$codeContents .= 'vehicle:'.$vehicle."\n";
+    }
 	$codeContents .= 'phone:'.$phone."\n"; 
 	$conn = new mysqli('localhost', 'root', '', 'fest');
 	$events = "SELECT * FROM events ";
@@ -69,9 +72,9 @@ if(isset($_POST['submit']) ) {
             </div>
 			<button type="button" class="btn " id="show_events">Select Events</button>
 			<div class="form-group "style="display:none;" id="events">
-				<input type="checkbox" name="vehicle1" value="Bike"> I have a bike<br>
-				<input type="checkbox" name="vehicle2" value="Car"> I have a car<br>
-				<input type="checkbox" name="vehicle3" value="Boat" > I have a boat<br><br>	
+				<input type="checkbox" name="vehicle[]" value="Bike"> I have a bike<br>
+				<input type="checkbox" name="vehicle[]" value="Car"> I have a car<br>
+				<input type="checkbox" name="vehicle[]" value="Boat" > I have a boat<br><br>	
 				<button type="button" class="btn " id="hide_events">Hide</button>
 			</div>
             <div class="form-group">
