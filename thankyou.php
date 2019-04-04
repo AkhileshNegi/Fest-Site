@@ -18,39 +18,46 @@ if(isset($_POST['submit']) ) {
 	$user_name =  $_POST['user_name'];
 	$filename = getUsernameFromEmail($email);
 	$phone =  $_POST['phone'];
-	$codeContents = 'Name:'.$user_name."\n"; 
-	$codeContents .= 'Email:'.$email."\n"; 
-  $participant_details = "INSERT INTO participant_details (name, email, phone) VALUES ('$user_name','$email','$phone')";
-  if ($conn->query($participant_details) === TRUE) {
-    echo "You have successfully registered \n";
-  } else {
-      echo "Error: " . $participant_details . "<br>" . $conn->error;
-    }
-  $codeContents .= 'Phone:'.$phone.""; 
-  
-  if(isset($_POST['event']) ) {
-  	foreach($_POST['event'] as $event){
-  		$codeContents .= 'Event:'.$event."\n";
-      $get_event="SELECT event_id FROM events WHERE event_name='$event'";
-      $result_event = $conn->query($get_event);
-      $event_id = $result_event->fetch_assoc();
-      $id = $event_id['event_id'];
-    
-
-      $unique_id="SELECT unique_id FROM participant_details WHERE email='$email'";
-      $result_id = $conn->query($unique_id);
-      $user_id = $result_id->fetch_assoc();
-      $userid = $user_id['unique_id'];
-
-      $event_registration = "INSERT INTO participants (unique_id, name, event_id) VALUES ('$userid','$user_name','$id')";
-      if ($conn->query($event_registration) === TRUE) {
-      echo "You have successfully registered for the event";
-      } else {
-        echo "Error: " . $event_registration . "<br>" . $conn->error;
+  $sql="SELECT * FROM participant_details WHERE email='$email'";
+  $result = $conn->query($sql);
+  if ($result->num_rows > 0) {
+    die();
+  }
+  else{
+    $codeContents = 'Name:'.$user_name."\n"; 
+  	$codeContents .= 'Email:'.$email."\n"; 
+    $participant_details = "INSERT INTO participant_details (name, email, phone) VALUES ('$user_name','$email','$phone')";
+    if ($conn->query($participant_details) === TRUE) {
+      echo "You have successfully registered \n";
+    } else {
+        echo "Error: " . $participant_details . "<br>" . $conn->error;
       }
-    }
-  }	
-  QRcode::png($codeContents, $tempDir.''.$filename.'.png', QR_ECLEVEL_L, 5);
+    $codeContents .= 'Phone:'.$phone.""; 
+    
+    if(isset($_POST['event']) ) {
+    	foreach($_POST['event'] as $event){
+    		$codeContents .= 'Event:'.$event."\n";
+        $get_event="SELECT event_id FROM events WHERE event_name='$event'";
+        $result_event = $conn->query($get_event);
+        $event_id = $result_event->fetch_assoc();
+        $id = $event_id['event_id'];
+      
+
+        $unique_id="SELECT unique_id FROM participant_details WHERE email='$email'";
+        $result_id = $conn->query($unique_id);
+        $user_id = $result_id->fetch_assoc();
+        $userid = $user_id['unique_id'];
+
+        $event_registration = "INSERT INTO participants (unique_id, name, event_id) VALUES ('$userid','$user_name','$id')";
+        if ($conn->query($event_registration) === TRUE) {
+        echo "You have successfully registered for the event";
+        } else {
+          echo "Error: " . $event_registration . "<br>" . $conn->error;
+        }
+      }
+    }	
+    QRcode::png($codeContents, $tempDir.''.$filename.'.png', QR_ECLEVEL_L, 5);
+  }
 }
 ?>
 <!DOCTYPE html>
