@@ -20,14 +20,15 @@ if(isset($_POST['submit']) ) {
 	$phone =  $_POST['phone'];
 	$codeContents = 'Name:'.$user_name."\n"; 
 	$codeContents .= 'Email:'.$email."\n"; 
-	foreach($_POST['event'] as $event){
-		$codeContents .= 'Event:'.$event."\n";
-	}
-	$codeContents .= 'Phone:'.$phone."\n"; 
+  if(isset($_POST['event']) ) {
+  	foreach($_POST['event'] as $event){
+  		$codeContents .= 'Event:'.$event."\n";
+  	}
+  }
+	$codeContents .= 'Phone:'.$phone.""; 
 	$conn = new mysqli('localhost', 'root', '', 'fest');
 	$events = "SELECT * FROM events ";
 	$results = $conn->query($events);
-	// $codeContents = 'mailto:'.$email.'?user_name='.urlencode($user_name).'&phone='.urlencode($phone); 
 	QRcode::png($codeContents, $tempDir.''.$filename.'.png', QR_ECLEVEL_L, 5);
 }
 ?>
