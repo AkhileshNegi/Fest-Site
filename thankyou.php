@@ -41,11 +41,13 @@ if(isset($_POST['submit']) ) {
     $codeContents .= $phone."\n"; 
     if(isset($_POST['event']) ) {
     	foreach($_POST['event'] as $event){
+        
         //Fetching corresponding event ID for a particular Event
         $get_event="SELECT event_id FROM events WHERE event_name='$event'";
         $result_event = $conn->query($get_event);
         $event_id = $result_event->fetch_assoc();
         $id = $event_id['event_id'];
+        
         //Inserting in participants table with one id corresponding to a one event ID
         $event_registration = "INSERT INTO participants (unique_id, name, event_id) VALUES ('$userid','$user_name','$id')";
         if ($conn->query($event_registration) === TRUE) {

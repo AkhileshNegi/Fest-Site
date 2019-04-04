@@ -7,7 +7,7 @@ $(document).ready(function(){
 	});
 	$("#check_events").click(function(){
     var id = $(this).data('user_id');
-    alert("clicked");
+    var id_numbers = new Array();
     jQuery.ajax({
       type: "POST",
       url: "check_event.php",
@@ -15,9 +15,10 @@ $(document).ready(function(){
               id: id,
             },
       cache: false,
-      success: function(data){
-       alert("hello"); 
-      }
+        success:function(msg){
+        console.log(msg);
+    },
+    dataType:"json"
     });
   });
 });
