@@ -43,7 +43,9 @@ $arr = explode("\n",$text);
                 </div>
                 <hr>
                 <p><strong>Data in QR-code:</strong></p>
-                <p><?php echo $arr['0'] ?></p>
+                <p><?php echo $arr['1'] ?></p>
+                <?php
+    echo '<input type="button" id="check_events" value="Events"  class="m-1 btn btn-outline-success respond" data-user_id="'.$arr['0'].'"/>';?>
                 <hr>
                 <a href="decoder.php">Decode Another</a>
             </div>
