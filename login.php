@@ -1,35 +1,8 @@
 <?php
-include('libs/phpqrcode/qrlib.php'); 
 $conn = new mysqli('localhost', 'root', '', 'fest');
 $sql="SELECT * FROM events";
 $result = $conn->query($sql);
-if ($conn->connect_error) {
-	die("Connection failed: " . $conn->connect_error);
-}
-function getUsernameFromEmail($email) {
-	$find = '@';
-	$pos = strpos($email, $find);
-	$username = substr($email, 0, $pos);
-	return $username;
-}
-if(isset($_POST['submit']) ) {
-	$tempDir = 'temp/'; 
-	$email = $_POST['mail'];
-	$user_name =  $_POST['user_name'];
-	$filename = getUsernameFromEmail($email);
-	$phone =  $_POST['phone'];
-	$codeContents = 'Name:'.$user_name."\n"; 
-	$codeContents .= 'Email:'.$email."\n"; 
-	foreach($_POST['event'] as $event){
-		$codeContents .= 'Event:'.$event."\n";
-	}
-	$codeContents .= 'Phone:'.$phone."\n"; 
-	$conn = new mysqli('localhost', 'root', '', 'fest');
-	$events = "SELECT * FROM events ";
-	$results = $conn->query($events);
-	// $codeContents = 'mailto:'.$email.'?user_name='.urlencode($user_name).'&phone='.urlencode($phone); 
-	QRcode::png($codeContents, $tempDir.''.$filename.'.png', QR_ECLEVEL_L, 5);
-}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -62,18 +35,18 @@ if(isset($_POST['submit']) ) {
         <h3><strong>Quick Response (QR) Code Generator</strong></h3>
         <div class="input-field">
           <h3>Please Fill-out All Fields</h3>
-          <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" >
+          <form method="post" action="thankyou.php" >
             <div class="form-group">
               <label>Name</label>
-              <input type="text" class="form-control" name="user_name" style="width:20em;" placeholder="Your Name" value="<?php echo @$user_name; ?>" required/>
+              <input type="text" class="form-control" name="user_name" style="width:20em;" placeholder="Your Name" required/>
              </div>
             <div class="form-group">
               <label>Email</label>
-              <input type="email" class="form-control" name="mail" style="width:20em;" placeholder="Enter your Email" value="<?php echo @$email; ?>" required />
+              <input type="email" class="form-control" name="mail" style="width:20em;" placeholder="Enter your Email" required />
             </div>
             <div class="form-group">
             <label>Phone Number</label>
-            <input type="number" class="form-control" name="phone" style="width:20em;" value="<?php echo @$phone; ?>" required placeholder="Enter your message"></textarea>
+            <input type="number" class="form-control" name="phone" style="width:20em;" required placeholder="Enter your number"></textarea>
             </div>
 			<button type="button" class="btn " id="show_events">Select Events</button>
 			<div class="form-group "style="display:none;" id="events">
@@ -90,22 +63,6 @@ if(isset($_POST['submit']) ) {
             </div>
           </form>
         </div>
-      </div>
-    </div>
-    <div class="col bg-warning">
-      <?php
-      if(!isset($filename)){
-        $filename = "author";
-      }
-      ?>
-      <div class="qr-field">
-        <h2 style="text-align:center">QR Code Result: </h2>
-        <center>
-          <div class="qrframe" style="border:2px solid black; width:210px; height:210px;">
-              <?php echo '<img src="temp/'. @$filename.'.png" style="width:200px; height:200px;"><br>'; ?>
-          </div>
-          <a class="btn btn-primary submitBtn" style="width:210px; margin:5px 0;" href="download.php?file=<?php echo $filename; ?>.png ">Download QR Code</a>
-        </center>
       </div>
     </div>
   </div>
