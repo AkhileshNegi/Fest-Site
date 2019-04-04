@@ -10,8 +10,6 @@ require "vendor/autoload.php";
 $qrcode = new QrReader($_FILES['qrimage']['tmp_name']);
 $text = $qrcode->text();
 $arr = explode("\n",$text);
-var_dump($arr);
-die();
 ?>
 <!DOCTYPE html>
 <html lang="en">
