@@ -6,7 +6,6 @@ if ($_SERVER['REQUEST_METHOD'] != "POST") {
 }
 
 require "vendor/autoload.php";
-
 $qrcode = new QrReader($_FILES['qrimage']['tmp_name']);
 $text = $qrcode->text();
 $arr = explode("\n",$text);
@@ -44,12 +43,12 @@ $arr = explode("\n",$text);
                 </div>
                 <hr>
                 <p><strong>Data in QR-code:</strong></p>
-                <p><?php echo $text ?></p>
+                <p><?php echo $arr['0'] ?></p>
                 <hr>
                 <a href="decoder.php">Decode Another</a>
             </div>
         </div>
     </div>
-    
+    <script src="js/main.js"></script>
 </body>
 </html>
