@@ -28,8 +28,15 @@ if(isset($_POST['submit']) ) {
 	$codeContents .= 'Phone:'.$phone.""; 
 	$conn = new mysqli('localhost', 'root', '', 'fest');
 	$events = "SELECT * FROM events ";
-	$results = $conn->query($events);
-	QRcode::png($codeContents, $tempDir.''.$filename.'.png', QR_ECLEVEL_L, 5);
+	$sql_event = $conn->query($events);
+	$participant_details = "INSERT INTO participant_details (name, email, phone) VALUES ('$user_name','$email','$phone')";
+  $sql_event = $conn->query($participant_details);
+  if ($conn->query($participant_details) === TRUE) {
+echo "You have successfully registered";
+} else {
+echo "Error: " . $participant_details . "<br>" . $conn->error;
+}
+  QRcode::png($codeContents, $tempDir.''.$filename.'.png', QR_ECLEVEL_L, 5);
 }
 ?>
 <!DOCTYPE html>
