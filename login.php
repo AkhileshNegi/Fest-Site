@@ -20,22 +20,37 @@ if(isset($_POST['submit']) ) {
 	$phone =  $_POST['phone'];
 	$codeContents = 'Name:'.$user_name."\n"; 
 	$codeContents .= 'Email:'.$email."\n"; 
+  $participant_details = "INSERT INTO participant_details (name, email, phone) VALUES ('$user_name','$email','$phone')";
+  $sql_participant_details = $conn->query($participant_details);
+  if ($conn->query($participant_details) === TRUE) {
+    echo "You have successfully registered";
+  } else {
+      echo "Error: " . $participant_details . "<br>" . $conn->error;
+    }
+  $codeContents .= 'Phone:'.$phone.""; 
   if(isset($_POST['event']) ) {
   	foreach($_POST['event'] as $event){
   		$codeContents .= 'Event:'.$event."\n";
-  	}
-  }
-	$codeContents .= 'Phone:'.$phone.""; 
-	$conn = new mysqli('localhost', 'root', '', 'fest');
-	$events = "SELECT * FROM events ";
-	$sql_event = $conn->query($events);
-	$participant_details = "INSERT INTO participant_details (name, email, phone) VALUES ('$user_name','$email','$phone')";
-  $sql_event = $conn->query($participant_details);
-  if ($conn->query($participant_details) === TRUE) {
-echo "You have successfully registered";
-} else {
-echo "Error: " . $participant_details . "<br>" . $conn->error;
-}
+      $get_event="SELECT event_id FROM events WHERE event_name='$event'";
+      $result_event = $conn->query($get_event);
+      $event_id = $result_event->fetch_assoc();
+      $id = $event_id['event_id'];
+    
+
+      $unique_id="SELECT unique_id FROM participant_details WHERE email='$email'";
+      $result_id = $conn->query($unique_id);
+      $user_id = $result_id->fetch_assoc();
+      $userid = $user_id['unique_id'];
+
+      $event_registration = "INSERT INTO participants (unique_id, name, event_id) VALUES ('$userid','$user_name','$id')";
+      $sql_registration = $conn->query($event_registration);
+      if ($conn->query($event_registration) === TRUE) {
+      echo "You have successfully registered for the event";
+      } else {
+        echo "Error: " . $event_registration . "<br>" . $conn->error;
+      }
+    }
+  }	
   QRcode::png($codeContents, $tempDir.''.$filename.'.png', QR_ECLEVEL_L, 5);
 }
 ?>
