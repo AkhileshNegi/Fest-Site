@@ -47,6 +47,7 @@ $arr = explode("\n",$text);
                 <?php
     echo '<input type="button" id="check_events" value="Events"  class="m-1 btn btn-outline-success respond" data-user_id="'.$arr['0'].'"/>';?>
                 <hr>
+                <div id="events"></div>
                 <a href="decoder.php">Decode Another</a>
             </div>
         </div>

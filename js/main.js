@@ -13,12 +13,16 @@ $(document).ready(function(){
       url: "check_event.php",
       data: { 
               id: id,
-            },
+            events},
       cache: false,
         success:function(msg){
-        console.log(msg);
+          $("#events").html(events());
     },
     dataType:"json"
     });
   });
+  function events(msg){
+    html="hello";
+    return html;
+  }
 });
