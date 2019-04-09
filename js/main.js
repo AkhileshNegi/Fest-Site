@@ -13,16 +13,28 @@ $(document).ready(function(){
       url: "check_event.php",
       data: { 
               id: id,
-            events},
+            },
       cache: false,
         success:function(msg){
-          $("#events").html(events());
+          $("#events").html(event(msg));
     },
     dataType:"json"
     });
   });
-  function events(msg){
-    html="hello";
-    return html;
+  function event(msg){
+    let myArray = msg;
+    var myvar = '<table class="table">'+
+                  '  <thead>'+
+                    '    <tr>'+
+                      '      <th scope="col">Events</th>'+
+                    '    </tr>'+
+                  '  </thead>'+
+                  '  <tbody>';
+    for(let i = 0; i < myArray.length; i++){
+      myvar += '<tr><td>'+myArray[i]+'</td></tr>';
+    }
+        myvar +=   '</tbody>'+
+                '</table>';
+    return myvar
   }
 });

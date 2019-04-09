@@ -6,7 +6,7 @@ $sql = "SELECT * FROM events t1 LEFT JOIN participants t2 ON t1.event_id = t2.ev
 $result = mysqli_query($conn,$sql);
 while($row = mysqli_fetch_assoc($result))
     {
-    $cars[] = $row['event_name']; 
+    $events[] = $row['event_name']; 
 }
-echo json_encode($cars);
+echo json_encode($events);
 ?>
