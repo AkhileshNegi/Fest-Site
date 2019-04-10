@@ -16,9 +16,9 @@ $result = $conn->query($sql);
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
   <a class="navbar-brand" href="#">CIEZYC</a>
   <ul class="navbar-nav">
-    <li class="nav-item">
-      <a class="nav-link" href="#">Login</a>
-    </li>
+	<li class="nav-item">
+	<a class="nav-link" href="#">Login</a>
+	</li>
     <li class="nav-item">
       <a class="nav-link" href="#">Decoder</a>
     </li>
@@ -42,7 +42,7 @@ $result = $conn->query($sql);
 						<h4 class="card-title"><?php echo $event['event_name']; ?></h4>
 						<p class="card-text"><?php echo $event['about']; ?></p>
 						<div class="card-footer d-flex justify-content-center">
-							<a href="#" class="btn btn-primary">Details</a>
+							<a href="#" class="event_details btn btn-primary" <?php echo 'data-eventid ="'.$event['event_id'].'"'?> >Details</a>
 						</div>
 					</div>
 				</div>
@@ -52,7 +52,7 @@ $result = $conn->query($sql);
 		</div>
 	</div>
 </div>
-<script src="jquery/jquery.min.js"></script>
-<script src="bootstrap/js/bootstrap.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="js/main.js"></script>
 </body>
 </html>

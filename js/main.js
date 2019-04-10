@@ -5,6 +5,10 @@ $(document).ready(function(){
 	$( "#hide_events" ).click(function() {
 	  $( "#events" ).hide();
 	});
+  $(".event_details").click(function(){
+  var eventid = $(this).data('eventid'); 
+  alert(eventid);   
+  });
 	$("#check_events").click(function(){
     var id = $(this).data('user_id');
     var id_numbers = new Array();
