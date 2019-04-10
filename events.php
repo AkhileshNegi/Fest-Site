@@ -1,3 +1,9 @@
+<?php
+$conn = new mysqli('localhost', 'root', '', 'fest');
+$sql="SELECT * FROM events";
+$result = $conn->query($sql);
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,7 +13,6 @@
 	<title>Events</title>
 </head>
 <body>
-
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
   <a class="navbar-brand" href="#">CIEZYC</a>
   <ul class="navbar-nav">
@@ -22,46 +27,31 @@
     </li>
   </ul>
 </nav>
-
 <div class="container-fluid">
-  <h2>EVENTS</h2>
+	<h2>EVENTS</h2>
 	<div class="container">
-	  <div class="row d-flex justify-content-center">
-	    <div class="col-sm-3 p-1 m-1">
-	      <div class="card" style="height:400px" >
-    <img class="img-thumbnail" style="height:200px" src="Robo.jpg" alt="Card image">
-    <div class="card-body">
-      <h4 class="card-title">Robo Ralley</h4>
-      <p class="card-text">Fastest to the finish takes it all!!</p>
-      <a href="#" class="btn btn-primary">See Profile</a>
-    </div>
-  </div>
-	    </div>
-	    <div class="col-sm-3 p-1 m-1">
-	      <div class="card" style="height:400px" >
-    <img class="img-thumbnail" style="height:200px" src="csgo.jpg" alt="Card image">
-    <div class="card-body">
-      <h4 class="card-title">CS:GO</h4>
-      <p class="card-text">Classic Terrorist v/s Counter Terrorist Matches</p>
-      <a href="#" class="btn btn-primary">See Profile</a>
-    </div>
-  </div>
-	    </div>
-	    <div class="col-sm-3 p-1 m-1">
-	      <div class="card" style="height:400px" >
-    <img class="img-thumbnail" style="height:200px" src="dota2.jpg" alt="Card image">
-    <div class="card-body">
-      <h4 class="card-title">Dota2</h4>
-      <p class="card-text">5 vs 5 Heroes Battle to Defend their Ancients</p>
-      <a href="#" class="btn btn-primary">See Profile</a>
-    </div>
-  </div>
-	    </div>
-	  </div>
+		<div class="row d-flex justify-content-center">
+			<?php 
+			if ($result->num_rows > 0) {
+				while($ads = $result->fetch_assoc()) { ?>
+			<div class="col-sm-3 p-1 m-1">
+				<div class="card" style="height:400px" >
+					<img class="img-thumbnail" style="height:190px" src="Robo.jpg" alt="Card image">
+					<div class="card-body">
+						<h4 class="card-title">Robo Ralley</h4>
+						<p class="card-text">Fastest to the finish takes it all!!</p>
+						<div class="card-footer d-flex justify-content-center">
+							<a href="#" class="btn btn-primary">Details</a>
+						</div>
+					</div>
+				</div>
+			</div>
+				<?php }
+			}?>
+		</div>
 	</div>
 </div>
-
-	<script src="jquery/jquery.min.js"></script>
-	<script src="bootstrap/js/bootstrap.min.js"></script>
+<script src="jquery/jquery.min.js"></script>
+<script src="bootstrap/js/bootstrap.min.js"></script>
 </body>
 </html>
