@@ -6,8 +6,19 @@ $(document).ready(function(){
 	  $( "#events" ).hide();
 	});
   $(".event_details").click(function(){
-  var eventid = $(this).data('eventid'); 
-  alert(eventid);   
+    var eventid = $(this).data('eventid'); 
+    jQuery.ajax({
+        type: "POST",
+        url: "event_detail.php",
+        data: { 
+          id: eventid,
+          },
+        cache: false,
+        success:function(msg){
+          console.log(msg);
+        },
+        dataType:"json"
+      });
   });
 	$("#check_events").click(function(){
     var id = $(this).data('user_id');
