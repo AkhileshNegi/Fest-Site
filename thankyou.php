@@ -24,30 +24,31 @@ if(isset($_POST['submit']) ) {
     die();
   }
   else{
-    $codeContents = 'Name:'.$user_name."\n"; 
-  	$codeContents .= 'Email:'.$email."\n"; 
     $participant_details = "INSERT INTO participant_details (name, email, phone) VALUES ('$user_name','$email','$phone')";
     if ($conn->query($participant_details) === TRUE) {
       echo "You have successfully registered \n";
     } else {
-        echo "Error: " . $participant_details . "<br>" . $conn->error;
-      }
-    $codeContents .= 'Phone:'.$phone.""; 
-    
+      echo "Error: " . $participant_details . "<br>" . $conn->error;
+    }
+    //Fetching corresponding user ID for a particular email
+    $unique_id="SELECT unique_id FROM participant_details WHERE email='$email'";
+    $result_id = $conn->query($unique_id);
+    $user_id = $result_id->fetch_assoc();
+    $userid = $user_id['unique_id'];
+
+    $codeContents =$userid."\n";         
+    $codeContents .=$user_name."\n"; 
+    $codeContents .= $phone."\n"; 
     if(isset($_POST['event']) ) {
     	foreach($_POST['event'] as $event){
-    		$codeContents .= 'Event:'.$event."\n";
+        
+        //Fetching corresponding event ID for a particular Event
         $get_event="SELECT event_id FROM events WHERE event_name='$event'";
         $result_event = $conn->query($get_event);
         $event_id = $result_event->fetch_assoc();
         $id = $event_id['event_id'];
-      
-
-        $unique_id="SELECT unique_id FROM participant_details WHERE email='$email'";
-        $result_id = $conn->query($unique_id);
-        $user_id = $result_id->fetch_assoc();
-        $userid = $user_id['unique_id'];
-
+        
+        //Inserting in participants table with one id corresponding to a one event ID
         $event_registration = "INSERT INTO participants (unique_id, name, event_id) VALUES ('$userid','$user_name','$id')";
         if ($conn->query($event_registration) === TRUE) {
         echo "You have successfully registered for the event";

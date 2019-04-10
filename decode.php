@@ -6,7 +6,6 @@ if ($_SERVER['REQUEST_METHOD'] != "POST") {
 }
 
 require "vendor/autoload.php";
-
 $qrcode = new QrReader($_FILES['qrimage']['tmp_name']);
 $text = $qrcode->text();
 $arr = explode("\n",$text);
@@ -44,12 +43,16 @@ $arr = explode("\n",$text);
                 </div>
                 <hr>
                 <p><strong>Data in QR-code:</strong></p>
-                <p><?php echo $text ?></p>
+                <p><?php echo $arr['1'] ?></p>
+                <?php
+    echo '<input type="button" id="check_events" value="Events"  class="m-1 btn btn-outline-success respond" data-user_id="'.$arr['0'].'"/>';?>
                 <hr>
+                <div id="events"></div>
                 <a href="decoder.php">Decode Another</a>
             </div>
         </div>
     </div>
-    
+    <script src="js/main.js"></script>
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </body>
 </html>
