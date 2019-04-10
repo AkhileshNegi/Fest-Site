@@ -33,13 +33,14 @@ $result = $conn->query($sql);
 		<div class="row d-flex justify-content-center">
 			<?php 
 			if ($result->num_rows > 0) {
-				while($ads = $result->fetch_assoc()) { ?>
+				while($event = $result->fetch_assoc()) { 
+					?>
 			<div class="col-sm-3 p-1 m-1">
 				<div class="card" style="height:400px" >
-					<img class="img-thumbnail" style="height:190px" src="Robo.jpg" alt="Card image">
+					<img class="img-thumbnail" style="height:190px" <?php echo 'src="'.$event['photo'].'"'; ?> alt="Card image">
 					<div class="card-body">
-						<h4 class="card-title">Robo Ralley</h4>
-						<p class="card-text">Fastest to the finish takes it all!!</p>
+						<h4 class="card-title"><?php echo $event['event_name']; ?></h4>
+						<p class="card-text"><?php echo $event['about']; ?></p>
 						<div class="card-footer d-flex justify-content-center">
 							<a href="#" class="btn btn-primary">Details</a>
 						</div>
