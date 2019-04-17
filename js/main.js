@@ -5,22 +5,22 @@ $(document).ready(function(){
 	$( "#hide_events" ).click(function() {
 	  $( "#events" ).hide();
 	});
-  $(".event_details").click(function(){
-    var eventid = $(this).data('eventid'); 
-    jQuery.ajax({
-        type: "POST",
-        url: "event_detail.php",
-        data: { 
-          id: eventid,
-          },
-        cache: false,
-        success:function(msg){
-          alert("  ")
-          // alert(event_detail(msg))
-        },
-        dataType:"json"
-      });
-  });
+  // $(".event_details").click(function(){
+  //   var eventid = $(this).data('eventid'); 
+  //   jQuery.ajax({
+  //       type: "POST",
+  //       url: "event_detail.php",
+  //       data: { 
+  //         id: eventid,
+  //         },
+  //       cache: false,
+  //       success:function(msg){
+  //         alert("  ")
+  //         // alert(event_detail(msg))
+  //       },
+  //       dataType:"json"
+  //     });
+  // });
   function event_detail(msg){
   let myArray = msg;
     var myvar = '';

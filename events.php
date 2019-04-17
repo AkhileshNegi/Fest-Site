@@ -42,7 +42,9 @@ $result = $conn->query($sql);
 						<h4 class="card-title"><?php echo $event['event_name']; ?></h4>
 						<p class="card-text"><?php echo $event['about']; ?></p>
 						<div class="card-footer d-flex justify-content-center">
-							<a href="#" class="event_details btn btn-primary" <?php echo 'data-eventid ="'.$event['event_id'].'"'?> >Details</a>
+							<?php
+	echo '<input type="button" name="theButton" value="Details"  class="event_details m-1 btn btn-success respond" data-toggle="modal" data-eventid ="'.$event['event_id'].'" data-target="#myModal" />';
+?>
 						</div>
 						<div id="details"></div>
 					</div>
@@ -54,37 +56,22 @@ $result = $conn->query($sql);
 	</div>
 </div>
 <div class="container">
-  <h2>Modal Example</h2>
-  <!-- Button to Open the Modal -->
-  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-    Open modal
-  </button>
-
-  <!-- The Modal -->
   <div class="modal" id="myModal">
     <div class="modal-dialog">
       <div class="modal-content">
-      
-        <!-- Modal Header -->
         <div class="modal-header">
           <h4 class="modal-title">Modal Heading</h4>
           <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
-        
-        <!-- Modal body -->
         <div class="modal-body">
           Modal body..
         </div>
-        
-        <!-- Modal footer -->
         <div class="modal-footer">
           <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-        </div>
-        
+        </div>  
       </div>
     </div>
   </div>
-  
 </div>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
