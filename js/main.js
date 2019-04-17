@@ -15,11 +15,20 @@ $(document).ready(function(){
           },
         cache: false,
         success:function(msg){
-          console.log(msg);
+          alert("  ")
+          // alert(event_detail(msg))
         },
         dataType:"json"
       });
   });
+  function event_detail(msg){
+  let myArray = msg;
+    var myvar = '';
+    for(let i = 0; i < myArray.length; i++){
+      myvar += '<tr><td>'+myArray[i]+'</td></tr>';
+    }
+    return myArray['event_name'];
+  }
 	$("#check_events").click(function(){
     var id = $(this).data('user_id');
     var id_numbers = new Array();
