@@ -16,11 +16,25 @@ $(document).ready(function(){
         cache: false,
         success:function(event){
           $("#event_name").html("<h1> "+event['event_name']+"</h1>");
-          $("#event_time").html("<h1> "+event['about']+"</h1>");
+          $("#event_time").html(event_about(event));
         },
         dataType:"json"
       });
   });
+    function event_about(event){
+    var html = '<div class="alert alert-success" role="alert">'+
+    '  <h4 class="alert-heading">'+event['about']+'</h4>'+
+    '  <hr>'+
+    '  <p>Location :'+event['location']+'</p>'+
+    '  <p>Entry Fees :'+event['entry_fees']+'</p>'+
+    '  <hr>'+
+    '  <p class="mb-0">'+
+    '  <div class="container d-flex mt-3 justify-content-center">'+
+    ' </div>'+
+    '  </p>'+
+    '</div>';
+    return html
+  }
   function event_detail(msg){
   let myArray = msg;
     var myvar = '';
