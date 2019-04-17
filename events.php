@@ -43,7 +43,7 @@ $result = $conn->query($sql);
 						<p class="card-text"><?php echo $event['about']; ?></p>
 						<div class="card-footer d-flex justify-content-center">
 							<?php
-	echo '<input type="button" name="theButton" value="Details"  class="event_details m-1 btn btn-success respond" data-toggle="modal" data-eventid ="'.$event['event_id'].'" data-target="#myModal" />';
+	echo '<input type="button" name="theButton" value="Details" id="'.$event['event_id'].'" class="event_details m-1 btn btn-success respond" data-toggle="modal" data-eventid ="'.$event['event_id'].'" data-target="#myModal" />';
 ?>
 						</div>
 						<div id="details"></div>
@@ -60,10 +60,10 @@ $result = $conn->query($sql);
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-title">Modal Heading</h4>
+          <h4 id="event_name">Modal Heading</h4>
           <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
-        <div class="modal-body">
+        <div id="event_time">
           Modal body..
         </div>
         <div class="modal-footer">
