@@ -33,7 +33,12 @@ $(document).ready(function(){
     '  <p>'+event['contact_1']+'</p></li>'+
     '  <p><li>'+event['event_head_2']+
     '  <p>'+event['contact_2']+'</p> </li></ul>'+
-    '</div>';
+    '</div>'+
+    '  <div class="container d-flex mt-3 justify-content-center">'+
+    '<form method="get" action="register.php">'+
+    '<button class="btn btn-outline-warning" type="submit">Register</button>'+
+    '</form>'
+    ' </div>';
     return html
   }
   function event_detail(msg){
