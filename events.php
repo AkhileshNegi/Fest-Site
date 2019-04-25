@@ -1,9 +1,31 @@
 <?php
 $conn = new mysqli('localhost', 'root', '', 'fest');
+session_unset();
+session_start(); 
+if ($conn->connect_error) {
+	die("Connection failed: " . $conn->connect_error);
+} 
+if($_POST){
+	$email = $_POST['email'];
+	$password = $_POST['password'];
+	$sql="SELECT * FROM participant_details WHERE email='$email' AND password = '$password'";
+	$result = $conn->query($sql);
+	if ($result->num_rows > 0) {
+		while($user = $result->fetch_assoc()) {
+			$_SESSION['id'] = $user['unique_id'];
+		}
+	}
+	else{
+		echo"Credentials does not match";
+		die();
+	}
+}
+if (!empty($_SESSION["id"])) {
+	$user_id = $_SESSION["id"];
+}
 $sql="SELECT * FROM events";
 $result = $conn->query($sql);
 ?>
-
 <!DOCTYPE html>
 <html>
 <head>

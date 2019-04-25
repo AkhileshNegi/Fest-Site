@@ -28,10 +28,11 @@ $(document).ready(function(){
     '  <p>Location :'+event['location']+'</p>'+
     '  <p>Entry Fees :'+event['entry_fees']+'</p>'+
     '  <hr>'+
-    '  <p class="mb-0">'+
-    '  <div class="container d-flex mt-3 justify-content-center">'+
-    ' </div>'+
-    '  </p>'+
+    '  <p>Contact:'+'<br></p>'+
+    '  <p> <ul> <li>'+event['event_head_1']+
+    '  <p>'+event['contact_1']+'</p></li>'+
+    '  <p><li>'+event['event_head_2']+
+    '  <p>'+event['contact_2']+'</p> </li></ul>'+
     '</div>';
     return html
   }
